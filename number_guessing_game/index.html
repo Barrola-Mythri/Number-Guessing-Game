@@ -1,0 +1,85 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Number Guessing Game</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f0f4f8;
+      text-align: center;
+      padding: 50px;
+    }
+    h1 {
+      color: #2c3e50;
+    }
+    input[type="number"] {
+      padding: 10px;
+      font-size: 16px;
+      width: 100px;
+    }
+    button {
+      padding: 10px 20px;
+      font-size: 16px;
+      margin-left: 10px;
+    }
+    .message {
+      font-size: 18px;
+      margin-top: 20px;
+    }
+    .result {
+      margin-top: 10px;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+  <h1>🎯 Number Guessing Game</h1>
+  <p>Guess a number between 1 and 100</p>
+  <input type="number" id="guessInput" min="1" max="100">
+  <button onclick="checkGuess()">Guess</button>
+  <div class="message" id="message"></div>
+  <div class="result" id="result"></div>
+  <button onclick="resetGame()">🔄 Restart</button>
+
+  <script>
+    let randomNumber = Math.floor(Math.random() * 100) + 1;
+    let attempts = 0;
+    let maxAttempts = 10;
+
+    function checkGuess() {
+      const userGuess = parseInt(document.getElementById('guessInput').value);
+      const message = document.getElementById('message');
+      const result = document.getElementById('result');
+      attempts++;
+
+      if (userGuess === randomNumber) {
+        message.textContent = `🎉 Correct! You guessed it in ${attempts} attempts.`;
+        result.textContent = '';
+        disableInput();
+      } else if (attempts >= maxAttempts) {
+        message.textContent = `❌ Game Over! The correct number was ${randomNumber}.`;
+        result.textContent = '';
+        disableInput();
+      } else {
+        message.textContent = userGuess > randomNumber ? "📉 Too High!" : "📈 Too Low!";
+        result.textContent = `Attempts left: ${maxAttempts - attempts}`;
+      }
+    }
+
+    function disableInput() {
+      document.getElementById('guessInput').disabled = true;
+    }
+
+    function resetGame() {
+      randomNumber = Math.floor(Math.random() * 100) + 1;
+      attempts = 0;
+      document.getElementById('guessInput').disabled = false;
+      document.getElementById('guessInput').value = '';
+      document.getElementById('message').textContent = '';
+      document.getElementById('result').textContent = '';
+    }
+  </script>
+</body>
+</html>
